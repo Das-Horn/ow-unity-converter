@@ -8,4 +8,4 @@ edition = "2021"
 [dependencies]
 progress = "0.2.0"
 image = "0.24.4"
-math = "0.10.0"
+num = "0.4.0"

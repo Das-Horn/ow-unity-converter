@@ -10,7 +10,7 @@ command "File-Path"
 The utility will save the output image in the same path as the original image and append "-" to the end of the file name.
 
 ## TODO
-- Port image processing from Python script to rust & include the original script.
+- <s>Port image processing from Python script to rust & include the original script.</s>
 - <s>Add argument support to supply file path from command line.</s>
 - Implement Albedo masking from mask.
 - Look into easier methods to add paths.

@@ -46,9 +46,11 @@ pub struct ImgConv {
         }
 
         let mut tmp_colour;
+        let mut proc_colour: image::Rgba<u8> = image::Rgba([0,0,0,0]);
         let tmp_image = self.input_image.as_ref()
                                                     .expect("Error loading image to memory");
         let (w, h) = tmp_image.dimensions();
+        let mut scale: f64 = 0.;
         let mut image_process = ImageBuffer::new(w, h);
         // let total = w * h;
         // let mut counter = 0;
@@ -56,9 +58,20 @@ pub struct ImgConv {
         for x in 0..w {
             for y in 0..h {
                 tmp_colour = tmp_image.get_pixel(x, y);
-                image_process.put_pixel(x, y, tmp_colour);
-                // println!("adding percent : {}", counter as i32);
-                // counter += 1;
+                // Roughness Channel : Green -> Alpha
+                proc_colour[3] = tmp_colour[1];
+                // AO Default Value 255
+                proc_colour[1] = 255;
+                // Metallic Calc
+                scale = (proc_colour[0] / 255) as f64;
+
+                if scale < 0.5 {
+                    scale = 0.;
+                }
+
+                proc_colour[0] = num::clamp(((((scale - 0.5) * scale) * 2.) * 255.) as u8, 0, 1);
+
+                image_process.put_pixel(x, y, proc_colour);
             }
         }
         self.bar.reach_percent(90);

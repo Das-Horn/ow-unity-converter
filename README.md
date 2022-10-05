@@ -4,7 +4,7 @@ This is a tool that allows you to convert the compressed PBR textures from Overw
 
 ### Usage:
 ```
-command "File-Path"
+command "File-Path" ...
 ```
 
 The utility will save the output image in the same path as the original image and append "-" to the end of the file name.
@@ -14,4 +14,4 @@ The utility will save the output image in the same path as the original image an
 - <s>Add argument support to supply file path from command line.</s>
 - Implement Albedo masking from mask.
 - Look into easier methods to add paths.
-- Batch processing.
+- <s>Batch processing.</s>

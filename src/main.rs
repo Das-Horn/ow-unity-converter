@@ -10,8 +10,10 @@ fn main() {
         return;
     }
 
-    let mut conv = ImgConv::new();
+    for i in 1..input_args.len(){
+        let mut conv = ImgConv::new();
 
-    conv.read_image(&input_args[1]);
-    conv.from_owto_unity();
+        conv.read_image(&input_args[i]);
+        conv.from_owto_unity();
+    }
 }

@@ -2,7 +2,6 @@
 use ow_unity_converter::ImgConv;
 use std::env::args;
 
-
 fn main() {
     let input_args: Vec<String> = args().collect();
 

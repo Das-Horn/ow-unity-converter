@@ -1,6 +1,6 @@
 #![feature(allocator_api)]
 
-use std::{alloc::Global};
+use std::alloc::Global;
 
 use image::{DynamicImage, GenericImageView, ImageBuffer};
 
@@ -14,14 +14,13 @@ pub struct ImgConv {
     bar: Bar,
 }
 
- impl ImgConv { 
-
+impl ImgConv {
     pub fn new() -> ImgConv {
         let tmp_type = ImgConv {
             input_image: None,
             _image_read: false,
             path: String::from(""),
-            bar: Bar::new()
+            bar: Bar::new(),
         };
         return tmp_type;
     }
@@ -29,8 +28,7 @@ pub struct ImgConv {
     pub fn read_image(&mut self, path: &str) {
         self.bar.set_job_title("Reading Image...");
 
-        self.input_image = Some(image::open(&path)
-                                .expect("Error Loading the image."));
+        self.input_image = Some(image::open(&path).expect("Error Loading the image."));
 
         self.path = String::from(path);
         self._image_read = true;
@@ -38,7 +36,7 @@ pub struct ImgConv {
         self.bar.reach_percent(10);
     }
 
-    pub fn from_owto_unity(&mut self){
+    pub fn from_owto_unity(&mut self) {
         self.bar.set_job_title("Converting...");
 
         if !self._image_read {
@@ -46,9 +44,11 @@ pub struct ImgConv {
         }
 
         let mut tmp_colour;
-        let mut proc_colour: image::Rgba<u8> = image::Rgba([0,0,0,0]);
-        let tmp_image = self.input_image.as_ref()
-                                                    .expect("Error loading image to memory");
+        let mut proc_colour: image::Rgba<u8> = image::Rgba([0, 0, 0, 0]);
+        let tmp_image = self
+            .input_image
+            .as_ref()
+            .expect("Error loading image to memory");
         let (w, h) = tmp_image.dimensions();
         let mut scale: f64 = 0.;
         let mut image_process = ImageBuffer::new(w, h);
@@ -79,15 +79,13 @@ pub struct ImgConv {
         self.save_image(&image_process);
         self.bar.reach_percent(100);
         self.bar.jobs_done();
-
     }
 
-    fn save_image(&self,img: &ImageBuffer<image::Rgba<u8>, Vec<u8, Global>>) {
+    fn save_image(&self, img: &ImageBuffer<image::Rgba<u8>, Vec<u8, Global>>) {
         let mut process_string = String::from(&self.path);
 
         process_string.insert(process_string.len() - 4, '-');
 
-        img.save(process_string)
-            .expect("Error Saving the image");
+        img.save(process_string).expect("Error Saving the image");
     }
- }
+}

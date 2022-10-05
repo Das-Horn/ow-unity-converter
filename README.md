@@ -1,4 +1,5 @@
 # Overwatch Texture Conversion Tool
+[![GitHub issues](https://img.shields.io/github/issues/Das-Horn/ow-unity-converter?style=for-the-badge)](https://github.com/Das-Horn/ow-unity-converter/issues)
 
 This is a tool that allows you to convert the compressed PBR textures from Overwatch into a format that is compatible with unity's URP PBR render pipeline.
 

@@ -16,19 +16,18 @@ pub struct ImgConv {
 
 impl ImgConv {
     pub fn new() -> ImgConv {
-        let tmp_type = ImgConv {
+        ImgConv {
             input_image: None,
             _image_read: false,
             path: String::from(""),
             bar: Bar::new(),
-        };
-        return tmp_type;
+        }
     }
 
     pub fn read_image(&mut self, path: &str) {
         self.bar.set_job_title("Reading Image...");
 
-        self.input_image = Some(image::open(&path).expect("Error Loading the image."));
+        self.input_image = Some(image::open(path).expect("Error Loading the image."));
 
         self.path = String::from(path);
         self._image_read = true;
@@ -50,7 +49,7 @@ impl ImgConv {
             .as_ref()
             .expect("Error loading image to memory");
         let (w, h) = tmp_image.dimensions();
-        let mut scale: f64 = 0.;
+        let mut scale: f64;
         let mut image_process = ImageBuffer::new(w, h);
         // let total = w * h;
         // let mut counter = 0;
@@ -87,5 +86,12 @@ impl ImgConv {
         process_string.insert(process_string.len() - 4, '-');
 
         img.save(process_string).expect("Error Saving the image");
+    }
+}
+
+
+impl Default for ImgConv {
+    fn default() -> Self {
+        ImgConv::new()      
     }
 }

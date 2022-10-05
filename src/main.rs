@@ -5,7 +5,7 @@ use std::env::args;
 fn main() {
     let input_args: Vec<String> = args().collect();
 
-    if input_args.is_empty() {
+    if input_args.len() <= 1 {
         println!("Error no path supplied.");
         return;
     }

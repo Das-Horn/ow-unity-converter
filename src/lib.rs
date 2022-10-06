@@ -8,19 +8,26 @@ use progress::Bar;
 
 pub struct ImgConv {
     input_image: Option<DynamicImage>,
-    // convType: String,
+    convType: String,
     _image_read: bool,
     path: String,
     bar: Bar,
 }
 
 impl ImgConv {
-    pub fn new() -> ImgConv {
+    pub fn new(ctype: Option<String>) -> ImgConv {
+        let mut x: String;
+        match ctype {
+            Some(ctype) => x = ctype,
+            ctype => x = String::from("conv"),
+        }
+
         ImgConv {
             input_image: None,
             _image_read: false,
             path: String::from(""),
             bar: Bar::new(),
+            convType: x,
         }
     }
 
@@ -42,35 +49,33 @@ impl ImgConv {
             println!("Please read an image first.");
         }
 
-        let mut tmp_colour;
+        let mut tmp_colour: image::Rgba<u8> = image::Rgba([0, 0, 0, 0]);
         let mut proc_colour: image::Rgba<u8> = image::Rgba([0, 0, 0, 0]);
         let tmp_image = self
             .input_image
             .as_ref()
             .expect("Error loading image to memory");
         let (w, h) = tmp_image.dimensions();
-        let mut scale: f64;
+        let mut scale: f64 = 0.0;
         let mut image_process = ImageBuffer::new(w, h);
         // let total = w * h;
         // let mut counter = 0;
 
         for x in 0..w {
             for y in 0..h {
-                tmp_colour = tmp_image.get_pixel(x, y);
-                // Roughness Channel : Green -> Alpha
-                proc_colour[3] = tmp_colour[1];
-                // AO Default Value 255
-                proc_colour[1] = 255;
-                // Metallic Calc
-                scale = (proc_colour[0] / 255) as f64;
+                if(self.convType == "conv") {
+                    image_conv(
+                        &mut tmp_colour,
+                        tmp_image,
+                        x,
+                        y,
+                        proc_colour,
+                        &mut scale,
+                        &mut image_process,
+                    );
+                } else {
 
-                if scale < 0.5 {
-                    scale = 0.;
                 }
-
-                proc_colour[0] = num::clamp(((((scale - 0.5) * scale) * 2.) * 255.) as u8, 0, 1);
-
-                image_process.put_pixel(x, y, proc_colour);
             }
         }
         self.bar.reach_percent(90);
@@ -89,9 +94,31 @@ impl ImgConv {
     }
 }
 
+fn image_conv(
+    tmp_colour: &mut image::Rgba<u8>,
+    tmp_image: &DynamicImage,
+    x: u32,
+    y: u32,
+    mut proc_colour: image::Rgba<u8>,
+    scale: &mut f64,
+    image_process: &mut ImageBuffer<image::Rgba<u8>, Vec<u8>>,
+) {
+    *tmp_colour = tmp_image.get_pixel(x, y);
+    // Roughness Channel : Green -> Alpha
+    proc_colour[3] = tmp_colour[1];
+    // AO Default Value 255
+    proc_colour[1] = 255;
+    // Metallic Calc
+    *scale = (proc_colour[0] / 255) as f64;
+    if *scale < 0.5 {
+        *scale = 0.;
+    }
+    proc_colour[0] = num::clamp(((((*scale - 0.5) * *scale) * 2.) * 255.) as u8, 0, 1);
+    image_process.put_pixel(x, y, proc_colour);
+}
 
 impl Default for ImgConv {
     fn default() -> Self {
-        ImgConv::new()      
+        ImgConv::new(Some(String::from("conv")))
     }
 }

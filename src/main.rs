@@ -13,7 +13,7 @@ fn main() {
         String::from("A simple program to convert Overwatch textures"),
     );
 
-    cli_text.printOpeningMessage();
+    cli_text.print_opening_message();
 
     if input_args.len() <= 1 {
         println!("Error no path supplied.");

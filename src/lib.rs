@@ -8,7 +8,7 @@ use progress::Bar;
 
 pub struct ImgConv {
     input_image: Option<DynamicImage>,
-    convType: String,
+    conv_type: String,
     _image_read: bool,
     path: String,
     bar: Bar,
@@ -16,18 +16,18 @@ pub struct ImgConv {
 
 impl ImgConv {
     pub fn new(ctype: Option<String>) -> ImgConv {
-        let mut x: String;
+        let x: String;
         match ctype {
             Some(ctype) => x = ctype,
             ctype => x = String::from("conv"),
-        }
+        };
 
         ImgConv {
             input_image: None,
             _image_read: false,
             path: String::from(""),
             bar: Bar::new(),
-            convType: x,
+            conv_type: x,
         }
     }
 
@@ -63,7 +63,7 @@ impl ImgConv {
 
         for x in 0..w {
             for y in 0..h {
-                if(self.convType == "conv") {
+                if(self.conv_type == "conv") {
                     image_conv(
                         &mut tmp_colour,
                         tmp_image,

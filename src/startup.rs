@@ -1,5 +1,5 @@
 pub struct CDStartup {
-    openingMessage: String,
+    opening_message: String,
     title: String,
     logo: String,
 }
@@ -7,13 +7,13 @@ pub struct CDStartup {
 impl CDStartup {
     pub fn new(t: String, o: String) -> CDStartup {
         CDStartup {
-            logo: CDStartup::readLogo(),
+            logo: CDStartup::read_logo(),
             title: t,
-            openingMessage: o,
+            opening_message: o,
         }
     }
 
-    fn readLogo() -> String {
+    fn read_logo() -> String {
         String::from(
             "
                      ＿＿
@@ -30,10 +30,10 @@ impl CDStartup {
         )
     }
 
-    pub fn printOpeningMessage(self) {
+    pub fn print_opening_message(self) {
         println!("\x1b[38;5;205m{}", self.logo);
         println!("{}", self.title);
-        println!("{}\x1b[0m", self.openingMessage);
+        println!("{}\x1b[0m", self.opening_message);
     }
 }
 

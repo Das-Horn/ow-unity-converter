@@ -24,8 +24,5 @@ jobs:
               sudo apt-get install libgtk-3-dev
         fi
       shell: bash
-    - name: Switch Compiler
-      run: rustup toolchain install nightly & rustup default nightly
-      shell: bash
     - name: Build
       run: cargo build --verbose

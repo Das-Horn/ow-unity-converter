@@ -25,6 +25,7 @@ jobs:
         fi
       shell: bash
     - name: Switch Compiler
-      run: rustup toolchain install nightly & rustup default nightly
+      run: rustup toolchain install nightly
+           rustup default nightly
     - name: Build
       run: cargo build --verbose

@@ -5,11 +5,11 @@ This is a tool that allows you to convert the compressed PBR textures from Overw
 
 ## NFD
 
-Did a simple implementation of the nfd library for rust to allow image selection from a file dialog. This should work nativly on all Operating Systems and can be accessed via using -s instead of providing paths.
+Used the nfd crate from crates.io to add file dialog for easier use of the tool. This can be accessed by calling the executable with the -s argument.
 
 ### Usage:
 ```
-command "File-Path" ...
+ow-unity-converter [-s] "File-Path" ... 
 ```
 
 The utility will save the output image in the same path as the original image and append "-" to the end of the file name.

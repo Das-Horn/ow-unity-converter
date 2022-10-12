@@ -74,7 +74,7 @@ impl ImgConv {
                         &mut image_process,
                     );
                 } else {
-
+                    // TODO : add albedo masking here 
                 }
             }
         }
